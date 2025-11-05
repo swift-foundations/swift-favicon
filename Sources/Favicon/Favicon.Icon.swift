@@ -1,5 +1,5 @@
 import Foundation
 
 extension Favicon {
-  public enum Icon {}
+    public enum Icon {}
 }

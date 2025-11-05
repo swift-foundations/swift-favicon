@@ -1,8 +1,8 @@
 import Foundation
 
 extension Favicon.Route {
-  public enum Format: Equatable, Sendable, Hashable {
-    case png(Favicon.Icon.Size)
-    case svg
-  }
+    public enum Format: Equatable, Sendable, Hashable {
+        case png(Favicon.Icon.Size)
+        case svg
+    }
 }
