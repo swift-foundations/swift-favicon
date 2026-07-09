@@ -38,7 +38,7 @@ extension Favicon.Configuration {
 
 // MARK: - Test Configuration
 
-extension Favicon.Configuration: TestDependencyKey {
+extension Favicon.Configuration: Dependency.Key.Test {
     public static var testValue: Self {
         Self()
     }

@@ -4,19 +4,37 @@ import HTML
 @preconcurrency import URLRouting
 
 extension Favicon {
-    public struct Head: HTML {
-        @Dependency(\.favicon.router) var router
-        @Dependency(\.favicon.icons) var icons
-        @Dependency(\.favicon.configuration) var configuration
+    public struct Head: HTML.View {
+        // WHY: Captured eagerly at init (not held as `@Dependency` stored
+        // properties) because `body` is evaluated lazily by the renderer,
+        // outside `withDependencies`'s task-local scope. A `@Dependency`
+        // *stored* property re-resolves `wrappedValue` on every access
+        // (see swift-dependencies `Dependency.wrappedValue`), so reading
+        // it from `body` after the scope has closed silently falls back
+        // to `Favicon.testValue` / `Favicon.Configuration.testValue`
+        // (all-nil `IconSet`, no color scheme) and renders empty HTML.
+        // Reading through local `@Dependency` wrappers here, inside
+        // `init()`, resolves them once while the scope is still active
+        // and freezes the result in plain stored properties.
+        let router: any URLRouting.Router<Favicon.Route>
+        let icons: Favicon.IconSet
+        let configuration: Favicon.Configuration
 
-        public init() {}
+        public init() {
+            @Dependency(\.favicon.router) var router
+            @Dependency(\.favicon.icons) var icons
+            @Dependency(\.favicon.configuration) var configuration
+            self.router = router
+            self.icons = icons
+            self.configuration = configuration
+        }
     }
 }
 
 extension Favicon.Head {
 
-    @HTMLBuilder
-    public var body: some HTML {
+    @HTML.Builder
+    public var body: some HTML.View {
         // Basic favicon.ico
         if icons.ico != nil {
             link()

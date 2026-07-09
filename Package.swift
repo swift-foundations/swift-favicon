@@ -1,20 +1,20 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.3.1
 
 import PackageDescription
 
 let package = Package(
     name: "swift-favicon",
     platforms: [
-        .macOS(.v14),
-        .iOS(.v17)
+        .macOS(.v26),
+        .iOS(.v26)
     ],
     products: [
         .library(name: "Favicon", targets: ["Favicon"])
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.6.0"),
-        .package(url: "https://github.com/pointfreeco/swift-url-routing", from: "0.6.0"),
-        .package(url: "https://github.com/coenttb/swift-html", from: "0.8.0"),
+        .package(url: "https://github.com/swift-foundations/swift-dependencies.git", branch: "main"),
+        .package(url: "https://github.com/pointfreeco/swift-url-routing", from: "0.6.0"),  // TRANSITIONAL: institute fork's main is a held 38-commit RFC-first rewrite, not pointfree-API-compatible; every sibling port keeps pointfreeco this wave (SwiftPM identity "swift-url-routing" would collide otherwise)
+        .package(url: "https://github.com/swift-foundations/swift-html.git", branch: "main"),
     ],
     targets: [
         // Domain module with all functionality
@@ -22,7 +22,6 @@ let package = Package(
             name: "Favicon",
             dependencies: [
                 .product(name: "Dependencies", package: "swift-dependencies"),
-                .product(name: "DependenciesMacros", package: "swift-dependencies"),
                 .product(name: "URLRouting", package: "swift-url-routing"),
                 .product(name: "HTML", package: "swift-html"),
             ]
@@ -33,7 +32,7 @@ let package = Package(
             dependencies: [
                 "Favicon",
                 .product(name: "HTML", package: "swift-html"),
-                .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
+                .product(name: "Dependencies Test Support", package: "swift-dependencies"),
             ],
             exclude: ["Favicon.xctestplan"]
         ),

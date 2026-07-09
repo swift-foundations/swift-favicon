@@ -125,14 +125,14 @@ extension Favicon {
 
 // MARK: - Dependency
 
-extension DependencyValues {
+extension Dependency.Values {
     public var favicon: Favicon {
         get { self[Favicon.self] }
         set { self[Favicon.self] = newValue }
     }
 }
 
-extension Favicon: TestDependencyKey {
+extension Favicon: Dependency.Key.Test {
     public static var testValue: Favicon {
         Favicon(
             router: Route.Router(),
