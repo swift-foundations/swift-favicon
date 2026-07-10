@@ -1,5 +1,5 @@
 {
-  "originHash" : "67ad3a72ba7a7167ba732427d0c69178612766e6e3d2996d5017429288b964a3",
+  "originHash" : "cf93f4ace290ad9763eaa11bff95ed26b66b136b274d34212240437ecbb6caa6",
   "pins" : [
     {
       "identity" : "swift-affine-geometry-primitives",
@@ -1434,8 +1434,8 @@
     },
     {
       "identity" : "swift-url-routing",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/pointfreeco/swift-url-routing",
+      "kind" : "localSourceControl",
+      "location" : "https://github.com/swift-foundations/swift-url-routing.git",
       "state" : {
         "revision" : "1cfd564259ecb1d324bb718a8f03e513dab738d2",
         "version" : "0.6.2"
