@@ -31,7 +31,7 @@ struct ReadmeVerificationTests {
 
         // Create the favicon instance
         let favicon = Favicon(
-            router: Favicon.Route.Router(),
+            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: icons
         )
 
@@ -44,7 +44,7 @@ struct ReadmeVerificationTests {
     func exampleServingFavicons() throws {
         let icoData = Data("favicon".utf8)
         let icons = Favicon.IconSet(ico: icoData)
-        let favicon = Favicon(router: Favicon.Route.Router(), icons: icons)
+        let favicon = Favicon(router: Favicon.Route.Router().eraseToAnyParserPrinter(), icons: icons)
 
         // Parse incoming request path
         let route = try favicon.router.parse(URLRequestData(path: "favicon.ico"))
@@ -68,7 +68,7 @@ struct ReadmeVerificationTests {
             .baseURL("https://cdn.example.com/assets")
 
         let favicon = Favicon(
-            router: router,
+            router: router.eraseToAnyParserPrinter(),
             icons: icons
         )
 
@@ -126,7 +126,7 @@ struct ReadmeVerificationTests {
             appleTouchIcon: Data("apple".utf8)
         )
 
-        let favicon = Favicon(router: Favicon.Route.Router(), icons: icons)
+        let favicon = Favicon(router: Favicon.Route.Router().eraseToAnyParserPrinter(), icons: icons)
 
         // Test data retrieval
         #expect(favicon.data(for: .favicon) == Data("ico".utf8))
@@ -152,7 +152,7 @@ struct ReadmeVerificationTests {
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router(),
+            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: icons
         )
 

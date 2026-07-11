@@ -3,12 +3,12 @@ import Foundation
 @preconcurrency import URLRouting
 
 public struct Favicon: Sendable {
-    public let router: any URLRouting.Router<Favicon.Route>
+    public let router: AnyParserPrinter<RFC_3986.URI.Request.Data, Favicon.Route>
     public let icons: IconSet
     public let configuration: Configuration
 
     public init(
-        router: any URLRouting.Router<Favicon.Route> = Route.Router(),
+        router: AnyParserPrinter<RFC_3986.URI.Request.Data, Favicon.Route> = Route.Router().eraseToAnyParserPrinter(),
         icons: IconSet,
         configuration: Configuration = .init()
     ) {
@@ -135,7 +135,7 @@ extension Dependency.Values {
 extension Favicon: Dependency.Key.Test {
     public static var testValue: Favicon {
         Favicon(
-            router: Route.Router(),
+            router: Route.Router().eraseToAnyParserPrinter(),
             icons: IconSet()
         )
     }

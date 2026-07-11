@@ -22,7 +22,7 @@ struct FaviconTests {
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router(),
+            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: iconSet
         )
 
@@ -45,7 +45,7 @@ struct FaviconTests {
     @Test("Content types for routes")
     func contentTypes() {
         let favicon = Favicon(
-            router: Favicon.Route.Router(),
+            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: Favicon.IconSet()
         )
 
@@ -81,7 +81,7 @@ struct FaviconTests {
 
         // Create favicon with custom router configuration
         let _ = Favicon(
-            router: customRouter,
+            router: customRouter.eraseToAnyParserPrinter(),
             icons: Favicon.IconSet()
         )
 
@@ -102,7 +102,7 @@ struct FaviconTests {
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router(),
+            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: iconSet
         )
 
@@ -128,7 +128,7 @@ struct FaviconTests {
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router().baseURL("https://example.com"),
+            router: Favicon.Route.Router().baseURL("https://example.com").eraseToAnyParserPrinter(),
             icons: iconSet
         )
 
@@ -150,7 +150,7 @@ struct FaviconTests {
             .baseURL("https://cdn.myapp.com")
 
         let favicon = Favicon(
-            router: cdnRouter,
+            router: cdnRouter.eraseToAnyParserPrinter(),
             icons: iconSet
         )
 

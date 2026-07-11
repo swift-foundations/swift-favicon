@@ -18,7 +18,7 @@ struct FaviconHTMLTests {
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router(),
+            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: iconSet
         )
 
@@ -45,7 +45,7 @@ struct FaviconHTMLTests {
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router(),
+            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: iconSet
         )
 
@@ -75,7 +75,7 @@ struct FaviconHTMLTests {
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router(),
+            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: iconSet,
             configuration: Favicon.Configuration(includeAppleTouchIcon: true)
         )
@@ -101,7 +101,7 @@ struct FaviconHTMLTests {
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router(),
+            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: iconSet
         )
 
@@ -125,7 +125,7 @@ struct FaviconHTMLTests {
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router().baseURL("https://cdn.example.com"),
+            router: Favicon.Route.Router().baseURL("https://cdn.example.com").eraseToAnyParserPrinter(),
             icons: iconSet
         )
 
@@ -147,7 +147,7 @@ struct FaviconHTMLTests {
         let iconSet = Favicon.IconSet()
 
         let favicon = Favicon(
-            router: Favicon.Route.Router(),
+            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: iconSet,
             configuration: Favicon.Configuration(
                 colorScheme: Favicon.Configuration.ColorScheme(
@@ -178,7 +178,7 @@ struct FaviconHTMLTests {
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router(),
+            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: iconSet,
             configuration: Favicon.Configuration(includeAppleTouchIcon: false)
         )
@@ -210,7 +210,7 @@ struct FaviconHTMLTests {
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router(),
+            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: iconSet,
             configuration: Favicon.Configuration(
                 includeAppleTouchIcon: true,

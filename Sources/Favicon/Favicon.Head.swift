@@ -16,7 +16,7 @@ extension Favicon {
         // Reading through local `@Dependency` wrappers here, inside
         // `init()`, resolves them once while the scope is still active
         // and freezes the result in plain stored properties.
-        let router: any URLRouting.Router<Favicon.Route>
+        let router: AnyParserPrinter<RFC_3986.URI.Request.Data, Favicon.Route>
         let icons: Favicon.IconSet
         let configuration: Favicon.Configuration
 
