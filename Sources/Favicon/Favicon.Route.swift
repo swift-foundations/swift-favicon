@@ -1,6 +1,8 @@
 import Foundation
+import URLRouting
 
 extension Favicon {
+    @Cases
     public enum Route: Equatable, Sendable, Hashable {
         case favicon  // /favicon.ico
         case icon(Format)  // /icon-{size}.png

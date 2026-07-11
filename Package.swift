@@ -13,7 +13,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/swift-foundations/swift-dependencies.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-url-routing.git", from: "0.6.0"),  // Institute fork URL (principal ruling 2026-07-09); pinned to upstream-identical tags (0.6.2 = pointfree release SHA); do NOT use branch:main until the RFC-first rewrite lands via the routing arc.
+        .package(url: "https://github.com/swift-foundations/swift-url-routing.git", branch: "main"),
         .package(url: "https://github.com/swift-foundations/swift-html.git", branch: "main"),
     ],
     targets: [
