@@ -7,12 +7,12 @@ import Testing
 import URLRouting
 
 @Suite(
-    "Favicon HTML Generation Tests"
-)
-struct FaviconHTMLTests {
 
-    @Test("Generate basic favicon HTML")
-    func basicFaviconHTML() throws {
+)
+struct Test {
+
+    @Test
+    func `Generate basic favicon HTML`() throws {
         let iconSet = Favicon.IconSet(
             ico: Data()
         )
@@ -36,8 +36,8 @@ struct FaviconHTMLTests {
         #expect(htmlString.contains("type=\"image/x-icon\""))
     }
 
-    @Test("Generate HTML with PNG icons")
-    func pngIconsHTML() throws {
+    @Test
+    func `Generate HTML with PNG icons`() throws {
         let iconSet = Favicon.IconSet(
             png16: Data(),
             png32: Data(),
@@ -67,8 +67,8 @@ struct FaviconHTMLTests {
         #expect(htmlString.contains("sizes=\"192x192\""))
     }
 
-    @Test("Generate HTML with Apple Touch Icon")
-    func appleTouchIconHTML() throws {
+    @Test
+    func `Generate HTML with Apple Touch Icon`() throws {
         let iconSet = Favicon.IconSet(
             appleTouchIcon: Data(),
             appleTouchIcon180: Data()
@@ -94,8 +94,8 @@ struct FaviconHTMLTests {
         #expect(htmlString.contains("sizes=\"180x180\""))
     }
 
-    @Test("Generate HTML with SVG icon")
-    func svgIconHTML() throws {
+    @Test
+    func `Generate HTML with SVG icon`() throws {
         let iconSet = Favicon.IconSet(
             svg: Data("<svg></svg>".utf8)
         )
@@ -118,8 +118,8 @@ struct FaviconHTMLTests {
         #expect(htmlString.contains("type=\"image/svg+xml\""))
     }
 
-    @Test("Generate HTML with base URL from router")
-    func baseURLHTML() throws {
+    @Test
+    func `Generate HTML with base URL from router`() throws {
         let iconSet = Favicon.IconSet(
             ico: Data()
         )
@@ -142,8 +142,8 @@ struct FaviconHTMLTests {
         #expect(htmlString.contains("favicon.ico"))
     }
 
-    @Test("Generate HTML with theme color")
-    func themeColorHTML() throws {
+    @Test
+    func `Generate HTML with theme color`() throws {
         let iconSet = Favicon.IconSet()
 
         let favicon = Favicon(
@@ -170,8 +170,8 @@ struct FaviconHTMLTests {
         #expect(htmlString.contains("content=\"#ff0000\""))
     }
 
-    @Test("Generate minimal HTML when config excludes features")
-    func minimalHTML() throws {
+    @Test
+    func `Generate minimal HTML when config excludes features`() throws {
         let iconSet = Favicon.IconSet(
             ico: Data(),
             appleTouchIcon: Data()
@@ -198,8 +198,8 @@ struct FaviconHTMLTests {
         #expect(!htmlString.contains("apple-touch-icon"))
     }
 
-    @Test("Complete favicon set generates comprehensive HTML")
-    func completeHTML() throws {
+    @Test
+    func `Complete favicon set generates comprehensive HTML`() throws {
         let iconSet = Favicon.IconSet(
             ico: Data(),
             svg: Data("<svg></svg>".utf8),

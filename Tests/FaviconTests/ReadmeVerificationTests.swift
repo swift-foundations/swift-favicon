@@ -6,11 +6,11 @@ import HTML
 import Testing
 import URLRouting
 
-@Suite("README Verification")
-struct ReadmeVerificationTests {
+@Suite
+struct Test {
 
-    @Test("Example from README line 35-52: Creating a Favicon Instance")
-    func exampleCreatingFaviconInstance() throws {
+    @Test
+    func `Example from README line 35-52: Creating a Favicon Instance`() throws {
         // Example from README
         let icoData = Data("test".utf8)
         let svgData = Data("svg".utf8)
@@ -40,8 +40,8 @@ struct ReadmeVerificationTests {
         #expect(favicon.data(for: .icon(.svg)) == svgData)
     }
 
-    @Test("Example from README line 57-65: Serving Favicons")
-    func exampleServingFavicons() throws {
+    @Test
+    func `Example from README line 57-65: Serving Favicons`() throws {
         let icoData = Data("favicon".utf8)
         let icons = Favicon.IconSet(ico: icoData)
         let favicon = Favicon(router: Favicon.Route.Router().eraseToAnyParserPrinter(), icons: icons)
@@ -60,8 +60,8 @@ struct ReadmeVerificationTests {
         }
     }
 
-    @Test("Example from README line 106-113: Custom Base URL")
-    func exampleCustomBaseURL() throws {
+    @Test
+    func `Example from README line 106-113: Custom Base URL`() throws {
         let icons = Favicon.IconSet()
 
         let router = Favicon.Route.Router()
@@ -77,8 +77,8 @@ struct ReadmeVerificationTests {
         #expect(url.absoluteString == "https://cdn.example.com/assets/favicon.ico")
     }
 
-    @Test("README Supported Routes are parseable")
-    func readmeSupportedRoutes() throws {
+    @Test
+    func `README Supported Routes are parseable`() throws {
         let router = Favicon.Route.Router()
 
         // Test all routes documented in README
@@ -117,8 +117,8 @@ struct ReadmeVerificationTests {
         #expect(appleTouchIconPrecomposedRoute == .appleTouchIconPrecomposed)
     }
 
-    @Test("README data and content type functionality")
-    func readmeDataAndContentType() {
+    @Test
+    func `README data and content type functionality`() {
         let icons = Favicon.IconSet(
             ico: Data("ico".utf8),
             svg: Data("svg".utf8),
@@ -141,8 +141,8 @@ struct ReadmeVerificationTests {
         #expect(favicon.contentType(for: .appleTouchIcon(size: nil)) == "image/png")
     }
 
-    @Test("Example from README line 70-86: Generating HTML")
-    func exampleGeneratingHTML() throws {
+    @Test
+    func `Example from README line 70-86: Generating HTML`() throws {
         // Example from README - setup favicon with some icon data
         let icons = Favicon.IconSet(
             ico: Data("ico".utf8),

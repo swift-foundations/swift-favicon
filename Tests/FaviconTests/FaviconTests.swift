@@ -6,12 +6,12 @@ import Testing
 import URLRouting
 
 @Suite(
-    "Favicon Tests"
-)
-struct FaviconTests {
 
-    @Test("Serve favicon data for routes")
-    func serveFaviconData() async throws {
+)
+struct Test {
+
+    @Test
+    func `Serve favicon data for routes`() async throws {
         // Create an icon set with test data
         let iconSet = Favicon.IconSet(
             ico: Data("test favicon".utf8),
@@ -42,8 +42,8 @@ struct FaviconTests {
         #expect(appleTouchIcon == Data("apple-touch-icon".utf8))
     }
 
-    @Test("Content types for routes")
-    func contentTypes() {
+    @Test
+    func `Content types for routes`() {
         let favicon = Favicon(
             router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: Favicon.IconSet()
@@ -55,8 +55,8 @@ struct FaviconTests {
         #expect(favicon.contentType(for: Favicon.Route.appleTouchIcon()) == "image/png")
     }
 
-    @Test("Router parsing")
-    func routerParsing() throws {
+    @Test
+    func `Router parsing`() throws {
         let router = Favicon.Route.Router()
 
         // Test parsing various paths
@@ -73,8 +73,8 @@ struct FaviconTests {
         #expect(pngRoute == .icon(.png(.`32`)))
     }
 
-    @Test("Custom router with base URL")
-    func customRouter() throws {
+    @Test
+    func `Custom router with base URL`() throws {
         // Create a custom router with base URL
         let customRouter = Favicon.Route.Router()
             .baseURL("https://cdn.example.com/assets")
@@ -94,8 +94,8 @@ struct FaviconTests {
         #expect(url.absoluteString == "https://cdn.example.com/assets/favicon.ico")
     }
 
-    @Test("Returns nil for missing resources")
-    func returnNilForMissing() {
+    @Test
+    func `Returns nil for missing resources`() {
         // Create a minimal set with only favicon.ico
         let iconSet = Favicon.IconSet(
             ico: Data("ico".utf8)
@@ -121,8 +121,8 @@ struct FaviconTests {
         #expect(svgData == nil)
     }
 
-    @Test("Live configuration")
-    func liveConfiguration() {
+    @Test
+    func `Live configuration`() {
         let iconSet = Favicon.IconSet(
             ico: Data("configured".utf8)
         )
@@ -137,8 +137,8 @@ struct FaviconTests {
         #expect(data == Data("configured".utf8))
     }
 
-    @Test("Integration example")
-    func integrationExample() throws {
+    @Test
+    func `Integration example`() throws {
         // This shows how it would be used in a real app
         let iconSet = Favicon.IconSet(
             ico: Data("production".utf8),

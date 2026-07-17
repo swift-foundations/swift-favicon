@@ -6,13 +6,13 @@ import Testing
 import URLRouting
 
 @Suite(
-    "Favicon Router Tests"
+
 )
-struct FaviconRouterTests {
+struct Test {
     let router = Favicon.Route.Router()
 
-    @Test("Parse favicon.ico route")
-    func parseFaviconIco() throws {
+    @Test
+    func `Parse favicon.ico route`() throws {
 
         let route = try router.parse(URLRequestData(path: "favicon.ico"))
         #expect(route == .favicon)
@@ -22,8 +22,8 @@ struct FaviconRouterTests {
         #expect(path.path.joined(separator: "/") == "favicon.ico")
     }
 
-    @Test("Parse apple-touch-icon routes")
-    func parseAppleTouchIcon() throws {
+    @Test
+    func `Parse apple-touch-icon routes`() throws {
 
         // Test default apple-touch-icon
         let defaultRoute = try router.parse(URLRequestData(path: "apple-touch-icon.png"))
@@ -40,8 +40,8 @@ struct FaviconRouterTests {
         #expect(precomposedRoute == .appleTouchIconPrecomposed)
     }
 
-    @Test("Parse PNG icon routes")
-    func parsePNGIcons() throws {
+    @Test
+    func `Parse PNG icon routes`() throws {
         // Test 16x16 PNG
         let png16 = try router.parse(URLRequestData(path: "icon-16x16.png"))
         #expect(png16 == .icon(.png(.`16`)))
@@ -51,15 +51,15 @@ struct FaviconRouterTests {
         #expect(png32 == .icon(.png(.`32`)))
     }
 
-    @Test("Parse SVG icon route")
-    func parseSVGIcon() throws {
+    @Test
+    func `Parse SVG icon route`() throws {
         // Test SVG icon
         let iconSvg = try router.parse(URLRequestData(path: "icon.svg"))
         #expect(iconSvg == .icon(.svg))
     }
 
-    @Test("Print routes")
-    func printRoutes() throws {
+    @Test
+    func `Print routes`() throws {
         // Test printing various routes
         let favicon = try router.print(.favicon)
         #expect(favicon.path.joined(separator: "/") == "favicon.ico")
@@ -74,8 +74,8 @@ struct FaviconRouterTests {
         #expect(png16.path.joined(separator: "/") == "icon-16x16.png")
     }
 
-    @Test("Invalid routes throw errors")
-    func invalidRoutes() {
+    @Test
+    func `Invalid routes throw errors`() {
 
         #expect(throws: Error.self) {
             try router.parse(URLRequestData(path: "invalid-route.txt"))
