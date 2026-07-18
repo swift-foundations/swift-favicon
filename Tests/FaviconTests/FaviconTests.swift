@@ -3,7 +3,7 @@ import Dependencies_Test_Support
 import Favicon
 import Foundation
 import Testing
-import URLRouting
+@preconcurrency import URLRouting
 
 @Suite(
 
@@ -53,6 +53,31 @@ struct Test {
         #expect(favicon.contentType(for: Favicon.Route.icon(.png(.`16`))) == "image/png")
         #expect(favicon.contentType(for: Favicon.Route.icon(.svg)) == "image/svg+xml")
         #expect(favicon.contentType(for: Favicon.Route.appleTouchIcon()) == "image/png")
+    }
+
+    @Test
+    func `Response describes available favicon content`() {
+        let body = Data("test favicon".utf8)
+        let favicon = Favicon(
+            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
+            icons: Favicon.IconSet(ico: body)
+        )
+
+        let response = favicon.response(for: .favicon)
+
+        #expect(response?.body == body)
+        #expect(response?.contentType == "image/x-icon")
+        #expect(response?.cacheControl == "public, max-age=31536000, immutable")
+    }
+
+    @Test
+    func `Response is absent for missing favicon content`() {
+        let favicon = Favicon(
+            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
+            icons: Favicon.IconSet()
+        )
+
+        #expect(favicon.response(for: .favicon) == nil)
     }
 
     @Test

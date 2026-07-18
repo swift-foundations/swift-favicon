@@ -4,12 +4,12 @@ import Favicon
 import Foundation
 import HTML
 import Testing
-import URLRouting
+@preconcurrency import URLRouting
 
 @Suite(
 
 )
-struct Test {
+struct Markup {
 
     @Test
     func `Generate basic favicon HTML`() throws {
@@ -125,7 +125,9 @@ struct Test {
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router().baseURL("https://cdn.example.com").eraseToAnyParserPrinter(),
+            router: Favicon.Route.Router()
+                .baseURL("https://cdn.example.com")
+                .eraseToAnyParserPrinter(),
             icons: iconSet
         )
 

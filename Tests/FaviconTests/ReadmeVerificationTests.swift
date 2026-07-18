@@ -4,10 +4,10 @@ import Favicon
 import Foundation
 import HTML
 import Testing
-import URLRouting
+@preconcurrency import URLRouting
 
 @Suite
-struct Test {
+struct Readme {
 
     @Test
     func `Example from README line 35-52: Creating a Favicon Instance`() throws {
@@ -44,7 +44,10 @@ struct Test {
     func `Example from README line 57-65: Serving Favicons`() throws {
         let icoData = Data("favicon".utf8)
         let icons = Favicon.IconSet(ico: icoData)
-        let favicon = Favicon(router: Favicon.Route.Router().eraseToAnyParserPrinter(), icons: icons)
+        let favicon = Favicon(
+            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
+            icons: icons
+        )
 
         // Parse incoming request path
         let route = try favicon.router.parse(URLRequestData(path: "favicon.ico"))
@@ -126,7 +129,10 @@ struct Test {
             appleTouchIcon: Data("apple".utf8)
         )
 
-        let favicon = Favicon(router: Favicon.Route.Router().eraseToAnyParserPrinter(), icons: icons)
+        let favicon = Favicon(
+            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
+            icons: icons
+        )
 
         // Test data retrieval
         #expect(favicon.data(for: .favicon) == Data("ico".utf8))

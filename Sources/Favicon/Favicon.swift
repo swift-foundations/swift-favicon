@@ -8,7 +8,8 @@ public struct Favicon: Sendable {
     public let configuration: Configuration
 
     public init(
-        router: AnyParserPrinter<RFC_3986.URI.Request.Data, Favicon.Route> = Route.Router().eraseToAnyParserPrinter(),
+        router: AnyParserPrinter<RFC_3986.URI.Request.Data, Favicon.Route> =
+            Route.Router().eraseToAnyParserPrinter(),
         icons: IconSet,
         configuration: Configuration = .init()
     ) {

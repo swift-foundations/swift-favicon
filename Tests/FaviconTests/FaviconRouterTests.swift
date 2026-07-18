@@ -3,12 +3,12 @@ import Dependencies_Test_Support
 import Favicon
 import Foundation
 import Testing
-import URLRouting
+@preconcurrency import URLRouting
 
 @Suite(
 
 )
-struct Test {
+struct Routing {
     let router = Favicon.Route.Router()
 
     @Test
