@@ -76,6 +76,7 @@ extension Favicon.Route {
     // exactly this "matched against a fixed set of literals" failure shape.
     struct IconPathParser: Parser.Bidirectional {
         typealias Input = Substring
+        typealias Buffer = Substring
         typealias Output = Favicon.Route.Format
         typealias Failure = Parser.Match.Error
 
@@ -124,6 +125,17 @@ extension Favicon.Route {
                 }
             }
             input = Substring(literal) + input
+        }
+
+        borrowing func serialize(
+            _ output: Favicon.Route.Format,
+            into buffer: inout Substring
+        ) throws(Failure) {
+            // Forward-append dual of `print`'s prepend (byte-equal per the
+            // coder-unification spike laws).
+            var literal: Substring = ""
+            try print(output, into: &literal)
+            buffer += literal
         }
     }
 }
