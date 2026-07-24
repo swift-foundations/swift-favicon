@@ -23,6 +23,10 @@ let package = Package(
             dependencies: [
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "URLRouting", package: "swift-url-routing"),
+                // `router.url(for:)` returns a Foundation URL and now lives in the
+                // Foundation Integration (url-routing 4087efbe extracted it);
+                // MemberImportVisibility requires the defining module.
+                .product(name: "URL Routing Foundation Integration", package: "swift-url-routing"),
                 .product(name: "HTML", package: "swift-html"),
             ]
         ),
