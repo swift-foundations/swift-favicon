@@ -5,6 +5,7 @@ import Foundation
 import HTML
 import Testing
 @preconcurrency import URLRouting
+import URL_Routing_Foundation_Integration  // MemberImportVisibility: router.url(for:)
 
 @Suite
 struct Readme {

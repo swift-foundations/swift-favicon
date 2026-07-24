@@ -35,6 +35,7 @@ let package = Package(
             name: "FaviconTests",
             dependencies: [
                 "Favicon",
+                .product(name: "URL Routing Foundation Integration", package: "swift-url-routing"),
                 .product(name: "HTML", package: "swift-html"),
                 .product(name: "Dependencies Test Support", package: "swift-dependencies"),
             ],
