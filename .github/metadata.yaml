@@ -1,0 +1,9 @@
+# .github/metadata.yaml
+description: "Type-safe favicon serving for Swift web applications."
+topics:
+  - foundations
+  - favicon
+  - web
+homepage: "https://swift-institute.org"
+readme:
+  family: E
