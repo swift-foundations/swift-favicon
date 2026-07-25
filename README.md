@@ -27,6 +27,17 @@ dependencies: [
 ]
 ```
 
+Add the product to your target:
+
+```swift
+.target(
+    name: "YourTarget",
+    dependencies: [
+        .product(name: "Favicon", package: "swift-favicon")
+    ]
+)
+```
+
 ## Quick Start
 
 ### Creating a Favicon Instance
