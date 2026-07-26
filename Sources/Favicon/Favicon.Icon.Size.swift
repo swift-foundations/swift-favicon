@@ -1,5 +1,3 @@
-import Foundation
-
 extension Favicon.Icon {
     /// Standard favicon sizes as an enum with numeric cases
     public enum Size: String, Sendable, Hashable, CaseIterable, CustomStringConvertible {

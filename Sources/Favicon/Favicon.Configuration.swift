@@ -1,5 +1,4 @@
 import Dependencies
-import Foundation
 @preconcurrency import URLRouting
 
 extension Favicon {

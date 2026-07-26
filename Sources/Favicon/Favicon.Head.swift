@@ -1,5 +1,4 @@
 import Dependencies
-import Foundation
 import HTML
 @preconcurrency import URLRouting
 import URL_Routing_Foundation_Integration  // MemberImportVisibility: router.url(for:)
