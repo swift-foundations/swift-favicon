@@ -7,8 +7,14 @@ import Testing
 @preconcurrency import URLRouting
 import URL_Routing_Foundation_Integration  // MemberImportVisibility: router.url(for:)
 
-@Suite
+@Suite("Readme")
 struct Readme {
+    @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
+}
+
+extension Readme.Integration {
 
     @Test
     func `Example from README line 35-52: Creating a Favicon Instance`() throws {

@@ -5,11 +5,15 @@ import Foundation
 import Testing
 @preconcurrency import URLRouting
 
-@Suite(
-
-)
+@Suite("Routing")
 struct Routing {
-    let router = Favicon.Route.Router()
+    @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
+}
+
+extension Routing.Integration {
+    var router: Favicon.Route.Router { Favicon.Route.Router() }
 
     @Test
     func `Parse favicon.ico route`() throws {

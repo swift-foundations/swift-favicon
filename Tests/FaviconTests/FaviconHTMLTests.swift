@@ -6,10 +6,14 @@ import HTML
 import Testing
 @preconcurrency import URLRouting
 
-@Suite(
-
-)
+@Suite("Markup")
 struct Markup {
+    @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
+}
+
+extension Markup.Integration {
 
     @Test
     func `Generate basic favicon HTML`() throws {

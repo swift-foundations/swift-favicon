@@ -6,24 +6,25 @@ extension Favicon.Icon {
         case `180` = "180x180"
         case `192` = "192x192"
         case `512` = "512x512"
+    }
+}
 
-        public var width: Int {
-            switch self {
-            case .`16`: return 16
-            case .`32`: return 32
-            case .`180`: return 180
-            case .`192`: return 192
-            case .`512`: return 512
-            }
+extension Favicon.Icon.Size {
+    public var width: Int {
+        switch self {
+        case .`16`: return 16
+        case .`32`: return 32
+        case .`180`: return 180
+        case .`192`: return 192
+        case .`512`: return 512
         }
+    }
 
-        public var height: Int {
-            width  // Square icons
-        }
+    public var height: Int {
+        width  // Square icons
+    }
 
-        public var description: String {
-            rawValue
-        }
-
+    public var description: String {
+        rawValue
     }
 }

@@ -6,10 +6,14 @@ import Testing
 @preconcurrency import URLRouting
 import URL_Routing_Foundation_Integration  // MemberImportVisibility: router.url(for:)
 
-@Suite(
-
-)
+@Suite("Test")
 struct Test {
+    @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
+}
+
+extension Test.Integration {
 
     @Test
     func `Serve favicon data for routes`() async throws {
