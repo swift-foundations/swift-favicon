@@ -32,8 +32,10 @@ extension Favicon {
             switch size {
             case .some(.`180`):
                 return icons.appleTouchIcon180 ?? icons.appleTouchIcon
+
             case .none:
                 return icons.appleTouchIcon
+
             default:
                 return icons.appleTouchIcon
             }
@@ -51,6 +53,7 @@ extension Favicon {
                 case .`192`: return icons.png192
                 case .`512`: return icons.png512
                 }
+
             case .svg:
                 return icons.svg
             }
@@ -62,11 +65,13 @@ extension Favicon {
         switch route {
         case .favicon:
             return "image/x-icon"
+
         case .icon(let format):
             switch format {
             case .png: return "image/png"
             case .svg: return "image/svg+xml"
             }
+
         case .appleTouchIcon, .appleTouchIconPrecomposed:
             return "image/png"
         }

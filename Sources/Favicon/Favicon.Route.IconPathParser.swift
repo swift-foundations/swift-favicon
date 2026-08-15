@@ -26,21 +26,27 @@ extension Favicon.Route.IconPathParser {
         case "icon.svg":
             input.removeFirst(input.count)
             return .svg
+
         case "icon-16x16.png":
             input.removeFirst(input.count)
             return .png(.`16`)
+
         case "icon-32x32.png":
             input.removeFirst(input.count)
             return .png(.`32`)
+
         case "icon-180x180.png":
             input.removeFirst(input.count)
             return .png(.`180`)
+
         case "icon-192x192.png":
             input.removeFirst(input.count)
             return .png(.`192`)
+
         case "icon-512x512.png":
             input.removeFirst(input.count)
             return .png(.`512`)
+
         default:
             throw .literalMismatch(expected: "recognized icon path", found: String(input))
         }
@@ -51,16 +57,21 @@ extension Favicon.Route.IconPathParser {
         switch output {
         case .svg:
             literal = "icon.svg"
+
         case .png(let size):
             switch size {
             case .`16`:
                 literal = "icon-16x16.png"
+
             case .`32`:
                 literal = "icon-32x32.png"
+
             case .`180`:
                 literal = "icon-180x180.png"
+
             case .`192`:
                 literal = "icon-192x192.png"
+
             case .`512`:
                 literal = "icon-512x512.png"
             }
