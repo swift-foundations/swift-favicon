@@ -38,8 +38,7 @@ let package = Package(
                 .product(name: "URL Routing Foundation Integration", package: "swift-url-routing"),
                 .product(name: "HTML", package: "swift-html"),
                 .product(name: "Dependencies Test Support", package: "swift-dependencies"),
-            ],
-            exclude: ["Favicon.xctestplan"]
+            ]
         ),
     ]
 )
