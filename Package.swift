@@ -12,9 +12,9 @@ let package = Package(
         .library(name: "Favicon", targets: ["Favicon"])
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-foundations/swift-dependencies.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-url-routing.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-html.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-dependencies.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-url-routing.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-html.git", branch: "main"),
     ],
     targets: [
         // Domain module with all functionality

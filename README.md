@@ -1,6 +1,6 @@
 # swift-favicon
 
-[![CI](https://github.com/coenttb/swift-favicon/workflows/CI/badge.svg)](https://github.com/coenttb/swift-favicon/actions/workflows/ci.yml)
+[![CI](https://github.com/swift-compositions/swift-favicon/workflows/CI/badge.svg)](https://github.com/swift-compositions/swift-favicon/actions/workflows/ci.yml)
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
 
 Type-safe favicon serving for Swift web applications.
@@ -23,7 +23,7 @@ Add swift-favicon to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/coenttb/swift-favicon", from: "0.1.0"),
+    .package(url: "https://github.com/swift-compositions/swift-favicon", from: "0.1.0"),
 ]
 ```
 
@@ -177,7 +177,7 @@ router.get("favicon.ico") { request in
 
 ### Dependencies
 
-- [swift-html](https://github.com/coenttb/swift-html): The Swift library for domain-accurate and type-safe HTML & CSS.
+- [swift-html](https://github.com/swift-compositions/swift-html): The Swift library for domain-accurate and type-safe HTML & CSS.
 
 ### Used By
 
