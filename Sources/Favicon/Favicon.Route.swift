@@ -1,6 +1,8 @@
-import URLRouting
+import Case_Macro
 
 extension Favicon {
+    @Prisms
+    @Folds
     @Cases
     public enum Route: Equatable, Sendable, Hashable {
         case favicon  // /favicon.ico

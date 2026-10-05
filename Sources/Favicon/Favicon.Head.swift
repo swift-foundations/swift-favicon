@@ -1,8 +1,9 @@
 import Dependencies
-import Foundation  // MemberImportVisibility: URL.absoluteString
 import HTML
-@preconcurrency import URLRouting
-import URL_Routing_Foundation_Integration  // MemberImportVisibility: router.url(for:)
+import HTTP
+import HTTP_Router
+import RFC_3986
+import RFC_9110
 
 extension Favicon {
     public struct Head: HTML.View {
@@ -17,15 +18,15 @@ extension Favicon {
         // Reading through local `@Dependency` wrappers here, inside
         // `init()`, resolves them once while the scope is still active
         // and freezes the result in plain stored properties.
-        let router: AnyParserPrinter<RFC_3986.URI.Request.Data, Favicon.Route>
+        let baseURL: RFC_3986.URI?
         let icons: Favicon.IconSet
         let configuration: Favicon.Configuration
 
         public init() {
-            @Dependency(\.favicon.router) var router
+            @Dependency(\.favicon.baseURL) var baseURL
             @Dependency(\.favicon.icons) var icons
             @Dependency(\.favicon.configuration) var configuration
-            self.router = router
+            self.baseURL = baseURL
             self.icons = icons
             self.configuration = configuration
         }
@@ -41,7 +42,7 @@ extension Favicon.Head {
             link()
                 .attribute("rel", "icon")
                 .attribute("type", "image/x-icon")
-                .attribute("href", router.url(for: .favicon).absoluteString)
+                .attribute("href", href(.favicon))
         }
 
         // SVG variant - preferred for scalability
@@ -49,7 +50,7 @@ extension Favicon.Head {
             link()
                 .attribute("rel", "icon")
                 .attribute("type", "image/svg+xml")
-                .attribute("href", router.url(for: .icon(.svg)).absoluteString)
+                .attribute("href", href(.icon(.svg)))
         }
 
         // PNG variants
@@ -58,7 +59,7 @@ extension Favicon.Head {
                 .attribute("rel", "icon")
                 .attribute("type", "image/png")
                 .attribute("sizes", "16x16")
-                .attribute("href", router.url(for: .icon(.png(.`16`))).absoluteString)
+                .attribute("href", href(.icon(.png(.`16`))))
         }
 
         if icons.png32 != nil {
@@ -66,7 +67,7 @@ extension Favicon.Head {
                 .attribute("rel", "icon")
                 .attribute("type", "image/png")
                 .attribute("sizes", "32x32")
-                .attribute("href", router.url(for: .icon(.png(.`32`))).absoluteString)
+                .attribute("href", href(.icon(.png(.`32`))))
         }
 
         if icons.png192 != nil {
@@ -74,7 +75,7 @@ extension Favicon.Head {
                 .attribute("rel", "icon")
                 .attribute("type", "image/png")
                 .attribute("sizes", "192x192")
-                .attribute("href", router.url(for: .icon(.png(.`192`))).absoluteString)
+                .attribute("href", href(.icon(.png(.`192`))))
         }
 
         // Apple Touch Icon
@@ -82,7 +83,7 @@ extension Favicon.Head {
             link()
                 .attribute("rel", "apple-touch-icon")
                 .attribute("sizes", "180x180")
-                .attribute("href", router.url(for: .appleTouchIcon()).absoluteString)
+                .attribute("href", href(.appleTouchIcon()))
         }
 
         // Apple Touch Icon 180x180 specific
@@ -90,7 +91,7 @@ extension Favicon.Head {
             link()
                 .attribute("rel", "apple-touch-icon")
                 .attribute("sizes", "180x180")
-                .attribute("href", router.url(for: .appleTouchIcon(size: .`180`)).absoluteString)
+                .attribute("href", href(.appleTouchIcon(size: .`180`)))
         }
 
         // Theme color
@@ -99,5 +100,11 @@ extension Favicon.Head {
                 .attribute("name", "theme-color")
                 .attribute("content", colorScheme.primary)
         }
+    }
+}
+
+extension Favicon.Head {
+    func href(_ route: Favicon.Route) -> String {
+        Favicon.url(for: route, baseURL: baseURL)
     }
 }

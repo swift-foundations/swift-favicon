@@ -1,10 +1,11 @@
 import Dependencies
 import Dependencies_Test_Support
 import Favicon
-import Foundation
 import HTML
 import Testing
-@preconcurrency import URLRouting
+import HTTP
+import HTTP_Router
+import RFC_3986
 
 @Suite("Markup")
 struct Markup {
@@ -18,11 +19,10 @@ extension Markup.Integration {
     @Test
     func `Generate basic favicon HTML`() throws {
         let iconSet = Favicon.IconSet(
-            ico: Data()
+            ico: emptyData()
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: iconSet
         )
 
@@ -43,13 +43,12 @@ extension Markup.Integration {
     @Test
     func `Generate HTML with PNG icons`() throws {
         let iconSet = Favicon.IconSet(
-            png16: Data(),
-            png32: Data(),
-            png192: Data()
+            png16: emptyData(),
+            png32: emptyData(),
+            png192: emptyData()
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: iconSet
         )
 
@@ -74,12 +73,11 @@ extension Markup.Integration {
     @Test
     func `Generate HTML with Apple Touch Icon`() throws {
         let iconSet = Favicon.IconSet(
-            appleTouchIcon: Data(),
-            appleTouchIcon180: Data()
+            appleTouchIcon: emptyData(),
+            appleTouchIcon180: emptyData()
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: iconSet,
             configuration: Favicon.Configuration(includeAppleTouchIcon: true)
         )
@@ -101,11 +99,10 @@ extension Markup.Integration {
     @Test
     func `Generate HTML with SVG icon`() throws {
         let iconSet = Favicon.IconSet(
-            svg: Data("<svg></svg>".utf8)
+            svg: bytes("<svg></svg>")
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: iconSet
         )
 
@@ -125,13 +122,11 @@ extension Markup.Integration {
     @Test
     func `Generate HTML with base URL from router`() throws {
         let iconSet = Favicon.IconSet(
-            ico: Data()
+            ico: emptyData()
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router()
-                .baseURL("https://cdn.example.com")
-                .eraseToAnyParserPrinter(),
+            baseURL: try RFC_3986.URI("https://cdn.example.com"),
             icons: iconSet
         )
 
@@ -153,7 +148,6 @@ extension Markup.Integration {
         let iconSet = Favicon.IconSet()
 
         let favicon = Favicon(
-            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: iconSet,
             configuration: Favicon.Configuration(
                 colorScheme: Favicon.Configuration.ColorScheme(
@@ -179,12 +173,11 @@ extension Markup.Integration {
     @Test
     func `Generate minimal HTML when config excludes features`() throws {
         let iconSet = Favicon.IconSet(
-            ico: Data(),
-            appleTouchIcon: Data()
+            ico: emptyData(),
+            appleTouchIcon: emptyData()
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: iconSet,
             configuration: Favicon.Configuration(includeAppleTouchIcon: false)
         )
@@ -207,16 +200,15 @@ extension Markup.Integration {
     @Test
     func `Complete favicon set generates comprehensive HTML`() throws {
         let iconSet = Favicon.IconSet(
-            ico: Data(),
-            svg: Data("<svg></svg>".utf8),
-            png16: Data(),
-            png32: Data(),
-            png192: Data(),
-            appleTouchIcon: Data()
+            ico: emptyData(),
+            svg: bytes("<svg></svg>"),
+            png16: emptyData(),
+            png32: emptyData(),
+            png192: emptyData(),
+            appleTouchIcon: emptyData()
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: iconSet,
             configuration: Favicon.Configuration(
                 includeAppleTouchIcon: true,

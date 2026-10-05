@@ -1,5 +1,4 @@
 import Dependencies
-@preconcurrency import URLRouting
 
 extension Favicon {
     /// Configuration for HTML meta tag generation

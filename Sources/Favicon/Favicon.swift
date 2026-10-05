@@ -1,19 +1,21 @@
 import Dependencies
 import Foundation
-@preconcurrency import URLRouting
+import HTTP
+import HTTP_Router
+import RFC_3986
+import RFC_9110
 
 public struct Favicon: Sendable {
-    public let router: AnyParserPrinter<RFC_3986.URI.Request.Data, Favicon.Route>
+    public let baseURL: RFC_3986.URI?
     public let icons: IconSet
     public let configuration: Configuration
 
     public init(
-        router: AnyParserPrinter<RFC_3986.URI.Request.Data, Favicon.Route> =
-            Route.Router().eraseToAnyParserPrinter(),
+        baseURL: RFC_3986.URI? = nil,
         icons: IconSet,
         configuration: Configuration = .init()
     ) {
-        self.router = router
+        self.baseURL = baseURL
         self.icons = icons
         self.configuration = configuration
     }
@@ -99,9 +101,25 @@ extension Dependency.Values {
 
 extension Favicon: Dependency.Key.Test {
     public static var testValue: Favicon {
-        Favicon(
-            router: Route.Router().eraseToAnyParserPrinter(),
-            icons: IconSet()
-        )
+        Favicon(icons: IconSet())
+    }
+}
+
+extension Favicon {
+    public func url(for route: Route) -> String {
+        Self.url(for: route, baseURL: baseURL)
+    }
+
+    static func url(for route: Route, baseURL: RFC_3986.URI?) -> String {
+        let target: RFC_9110.Target
+        do throws(HTTP.Router.Error) {
+            target = try HTTP.target(Route.self, for: route)
+        } catch {
+            return ""
+        }
+        guard case .resource(let uri) = target else { return "" }
+        guard let baseURL else { return uri.value }
+        let base = baseURL.value.hasSuffix("/") ? String(baseURL.value.dropLast()) : baseURL.value
+        return base + uri.value
     }
 }

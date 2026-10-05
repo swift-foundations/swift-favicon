@@ -1,10 +1,10 @@
 import Dependencies
 import Dependencies_Test_Support
 import Favicon
-import Foundation
 import Testing
-@preconcurrency import URLRouting
-import URL_Routing_Foundation_Integration  // MemberImportVisibility: router.url(for:)
+import HTTP
+import HTTP_Router
+import RFC_3986
 
 @Suite("Test")
 struct Test {
@@ -19,38 +19,36 @@ extension Test.Integration {
     func `Serve favicon data for routes`() async throws {
         // Create an icon set with test data
         let iconSet = Favicon.IconSet(
-            ico: Data("test favicon".utf8),
-            png16: Data("16x16".utf8),
-            png32: Data("32x32".utf8),
-            png192: Data("192x192".utf8),
-            appleTouchIcon: Data("apple-touch-icon".utf8)
+            ico: bytes("test favicon"),
+            png16: bytes("16x16"),
+            png32: bytes("32x32"),
+            png192: bytes("192x192"),
+            appleTouchIcon: bytes("apple-touch-icon")
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: iconSet
         )
 
         // Test favicon.ico retrieval
         let faviconData = favicon.data(for: Favicon.Route.favicon)
-        #expect(faviconData == Data("test favicon".utf8))
+        #expect(faviconData == bytes("test favicon"))
 
         // Test PNG icon retrieval
         let png16 = favicon.data(for: Favicon.Route.icon(.png(.`16`)))
-        #expect(png16 == Data("16x16".utf8))
+        #expect(png16 == bytes("16x16"))
 
         let png32 = favicon.data(for: Favicon.Route.icon(.png(.`32`)))
-        #expect(png32 == Data("32x32".utf8))
+        #expect(png32 == bytes("32x32"))
 
         // Test Apple Touch Icon
         let appleTouchIcon = favicon.data(for: Favicon.Route.appleTouchIcon())
-        #expect(appleTouchIcon == Data("apple-touch-icon".utf8))
+        #expect(appleTouchIcon == bytes("apple-touch-icon"))
     }
 
     @Test
     func `Content types for routes`() {
         let favicon = Favicon(
-            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: Favicon.IconSet()
         )
 
@@ -62,9 +60,8 @@ extension Test.Integration {
 
     @Test
     func `Response describes available favicon content`() {
-        let body = Data("test favicon".utf8)
+        let body = bytes("test favicon")
         let favicon = Favicon(
-            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: Favicon.IconSet(ico: body)
         )
 
@@ -78,7 +75,6 @@ extension Test.Integration {
     @Test
     func `Response is absent for missing favicon content`() {
         let favicon = Favicon(
-            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: Favicon.IconSet()
         )
 
@@ -87,58 +83,56 @@ extension Test.Integration {
 
     @Test
     func `Router parsing`() throws {
-        let router = Favicon.Route.Router()
+        let router = Favicon.Route.self
 
         // Test parsing various paths
-        let route = try router.parse(URLRequestData(path: "favicon.ico"))
+        let route = try router.match(request: RouteRequest.make(path: "favicon.ico"))
         #expect(route == .favicon)
 
-        let appleRoute = try router.parse(URLRequestData(path: "apple-touch-icon.png"))
+        let appleRoute = try router.match(request: RouteRequest.make(path: "apple-touch-icon.png"))
         #expect(appleRoute == .appleTouchIcon(size: nil))
 
-        let svgRoute = try router.parse(URLRequestData(path: "icon.svg"))
+        let svgRoute = try router.match(request: RouteRequest.make(path: "icon.svg"))
         #expect(svgRoute == .icon(.svg))
 
-        let pngRoute = try router.parse(URLRequestData(path: "icon-32x32.png"))
+        let pngRoute = try router.match(request: RouteRequest.make(path: "icon-32x32.png"))
         #expect(pngRoute == .icon(.png(.`32`)))
     }
 
     @Test
     func `Custom router with base URL`() throws {
         // Create a custom router with base URL
-        let customRouter = Favicon.Route.Router()
-            .baseURL("https://cdn.example.com/assets")
+        let customRouter = Favicon.Route.self
 
         // Create favicon with custom router configuration
-        let _ = Favicon(
-            router: customRouter.eraseToAnyParserPrinter(),
+        let favicon = Favicon(
+            baseURL: try RFC_3986.URI("https://cdn.example.com/assets"),
             icons: Favicon.IconSet()
         )
 
         // The custom router can parse and print routes
-        let route = try customRouter.parse(URLRequestData(path: "favicon.ico"))
+        let route = try customRouter.match(request: RouteRequest.make(path: "favicon.ico"))
         #expect(route == .favicon)
 
         // Generate URL for a route
-        let url = customRouter.url(for: .favicon)
-        #expect(url.absoluteString == "https://cdn.example.com/assets/favicon.ico")
+        let url = favicon.url(for: .favicon)
+        #expect(url == "https://cdn.example.com/assets/favicon.ico")
     }
 
     @Test
     func `Returns nil for missing resources`() {
         // Create a minimal set with only favicon.ico
         let iconSet = Favicon.IconSet(
-            ico: Data("ico".utf8)
+            ico: bytes("ico")
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router().eraseToAnyParserPrinter(),
             icons: iconSet
         )
 
         // Should return the ico data
         let icoData = favicon.data(for: Favicon.Route.favicon)
-        #expect(icoData == Data("ico".utf8))
+        #expect(icoData == bytes("ico"))
 
         // Should return nil for missing resources
         let pngData = favicon.data(for: Favicon.Route.icon(.png(.`16`)))
@@ -152,35 +146,34 @@ extension Test.Integration {
     }
 
     @Test
-    func `Live configuration`() {
+    func `Live configuration`() throws {
         let iconSet = Favicon.IconSet(
-            ico: Data("configured".utf8)
+            ico: bytes("configured")
         )
 
         let favicon = Favicon(
-            router: Favicon.Route.Router().baseURL("https://example.com").eraseToAnyParserPrinter(),
+            baseURL: try RFC_3986.URI("https://example.com"),
             icons: iconSet
         )
 
         // Test that configuration was applied
         let data = favicon.data(for: Favicon.Route.favicon)
-        #expect(data == Data("configured".utf8))
+        #expect(data == bytes("configured"))
     }
 
     @Test
     func `Integration example`() throws {
         // This shows how it would be used in a real app
         let iconSet = Favicon.IconSet(
-            ico: Data("production".utf8),
-            svg: Data("<svg></svg>".utf8)
+            ico: bytes("production"),
+            svg: bytes("<svg></svg>")
         )
 
         // Create with custom router for CDN
-        let cdnRouter = Favicon.Route.Router()
-            .baseURL("https://cdn.myapp.com")
+        let cdnRouter = Favicon.Route.self
 
         let favicon = Favicon(
-            router: cdnRouter.eraseToAnyParserPrinter(),
+            baseURL: try RFC_3986.URI("https://cdn.myapp.com"),
             icons: iconSet
         )
 
@@ -190,7 +183,7 @@ extension Test.Integration {
             let contentType = favicon.contentType(for: route)
             // Return response with data and content type
             #expect(contentType == "image/x-icon")
-            #expect(data == Data("production".utf8))
+            #expect(data == bytes("production"))
         }
     }
 }
